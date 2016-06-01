@@ -1,53 +1,71 @@
+/*
+  +----------------------------------------------------------------------+
+  | PHP Version 7                                                        |
+  +----------------------------------------------------------------------+
+  | Copyright (c) 1997-2016 The PHP Group                                |
+  +----------------------------------------------------------------------+
+  | This source file is subject to version 3.01 of the PHP license,      |
+  | that is bundled with this package in the file LICENSE, and is        |
+  | available through the world-wide-web at the following url:           |
+  | http://www.php.net/license/3_01.txt                                  |
+  | If you did not receive a copy of the PHP license and are unable to   |
+  | obtain it through the world-wide-web, please send a note to          |
+  | license@php.net so we can mail you a copy immediately.               |
+  +----------------------------------------------------------------------+
+  | Author:                                                              |
+  +----------------------------------------------------------------------+
+*/
+
+/* $Id$ */
+
 #ifndef PHP_ZIPKIN_H
-#define PHP_ZIPKIN_H 1
+#define PHP_ZIPKIN_H
+
+extern zend_module_entry zipkin_module_entry;
+#define phpext_zipkin_ptr &zipkin_module_entry
+
+#define PHP_ZIPKIN_VERSION "0.1.0" /* Replace with version number for your extension */
+
+#ifdef PHP_WIN32
+#	define PHP_ZIPKIN_API __declspec(dllexport)
+#elif defined(__GNUC__) && __GNUC__ >= 4
+#	define PHP_ZIPKIN_API __attribute__ ((visibility("default")))
+#else
+#	define PHP_ZIPKIN_API
+#endif
 
 #ifdef ZTS
 #include "TSRM.h"
 #endif
 
+/*
+  	Declare any global variables you may need between the BEGIN
+	and END macros here:
+
 ZEND_BEGIN_MODULE_GLOBALS(zipkin)
-    long counter;
-    zend_bool direction;
+	zend_long  global_value;
+	char *global_string;
 ZEND_END_MODULE_GLOBALS(zipkin)
+*/
 
-#ifdef ZTS
-#define ZIPKIN_G(v) TSRMG(zipkin_globals_id, zend_zipkin_globals *, v)
-#else
-#define ZIPKIN_G(v) (zipkin_globals.v)
+/* Always refer to the globals in your function as ZIPKIN_G(variable).
+   You are encouraged to rename these macros something shorter, see
+   examples in any other php module directory.
+*/
+#define ZIPKIN_G(v) ZEND_MODULE_GLOBALS_ACCESSOR(zipkin, v)
+
+#if defined(ZTS) && defined(COMPILE_DL_ZIPKIN)
+ZEND_TSRMLS_CACHE_EXTERN()
 #endif
 
-#define PHP_ZIPKIN_WORLD_VERSION "1.0"
-#define PHP_ZIPKIN_WORLD_EXTNAME "zipkin"
+#endif	/* PHP_ZIPKIN_H */
 
-typedef struct _php_zipkin_person {
-    char *name;
-    int name_len;
-    long age;
-} php_zipkin_person;
 
-#define PHP_ZIPKIN_PERSON_RES_NAME "Person Data"
-
-PHP_MINIT_FUNCTION(zipkin);
-PHP_MSHUTDOWN_FUNCTION(zipkin);
-PHP_RINIT_FUNCTION(zipkin);
-
-PHP_FUNCTION(zipkin_world);
-PHP_FUNCTION(zipkin_long);
-PHP_FUNCTION(zipkin_double);
-PHP_FUNCTION(zipkin_bool);
-PHP_FUNCTION(zipkin_null);
-PHP_FUNCTION(zipkin_greetme);
-PHP_FUNCTION(zipkin_add);
-// Part 2
-PHP_FUNCTION(zipkin_array);
-PHP_FUNCTION(zipkin_array_strings);
-PHP_FUNCTION(zipkin_get_global_var);
-PHP_FUNCTION(zipkin_set_local_var);
-// Part 3
-PHP_FUNCTION(zipkin_person_new);
-PHP_FUNCTION(zipkin_person_greet);
-
-extern zend_module_entry zipkin_module_entry;
-#define phpext_zipkin_prt &zipkin_module_entry
-
-#endif
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * End:
+ * vim600: noet sw=4 ts=4 fdm=marker
+ * vim<600: noet sw=4 ts=4
+ */

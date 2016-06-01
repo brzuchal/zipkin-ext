@@ -1,0 +1,13 @@
+// $Id$
+// vim:ft=javascript
+
+// If your extension references something external, use ARG_WITH
+// ARG_WITH("zipkin", "for zipkin support", "no");
+
+// Otherwise, use ARG_ENABLE
+// ARG_ENABLE("zipkin", "enable zipkin support", "no");
+
+if (PHP_ZIPKIN != "no") {
+	EXTENSION("zipkin", "zipkin.c", PHP_EXTNAME_SHARED, "/DZEND_ENABLE_STATIC_TSRMLS_CACHE=1");
+}
+
