@@ -1,7 +1,7 @@
 # Compile
 
 phpize  
-./configure --enable-hello  
+./configure --enable-zipkin  
 make  
 
 # Tutorial 1
@@ -10,19 +10,19 @@ http://devzone.zend.com/303/extension-writing-part-i-introduction-to-php-and-zen
 
 # Run
 
-php -c php.ini -r "echo hello_world();"  
-Hello World
+php -c php.ini -r "echo zipkin_world();"  
+zipkin World
 
-php -c php.ini -r "var_dump( hello_bool() );"  
+php -c php.ini -r "var_dump( zipkin_bool() );"  
 bool(true)
 
-php -c php.ini -r "echo hello_long();"  
+php -c php.ini -r "echo zipkin_long();"  
 42
 
-php -c php.ini -r "echo hello_double();"  
+php -c php.ini -r "echo zipkin_double();"  
 3.1415926535
 
-php -c php.ini -r "var_dump( hello_null() );"  
+php -c php.ini -r "var_dump( zipkin_null() );"  
 NULL
 
 
@@ -31,16 +31,16 @@ NULL
 http://devzone.zend.com/317/extension-writing-part-ii-parameters-arrays-and-zvals/
 http://devzone.zend.com/318/extension-writing-part-ii-parameters-arrays-and-zvals-continued/
 
-php -c php.ini -r "hello_greetme('Joe');"  
-Hello Joe
+php -c php.ini -r "zipkin_greetme('Joe');"  
+zipkin Joe
 
-php -c php.ini -r "echo hello_add(2, 4.1);"  
+php -c php.ini -r "echo zipkin_add(2, 4.1);"  
 6.1
 
-php -c php.ini -r "echo hello_add(2, 4.1, true);"  
+php -c php.ini -r "echo zipkin_add(2, 4.1, true);"  
 6
 
-php -c php.ini -r "var_dump(hello_array());"  
+php -c php.ini -r "var_dump(zipkin_array());"  
 
     array(6) {
       [42]=>
@@ -56,30 +56,30 @@ php -c php.ini -r "var_dump(hello_array());"
       ["subarray"]=>
       array(1) {
         [0]=>
-        string(5) "hello"
+        string(5) "zipkin"
       }
     }
 
 
-Show hello_array_strings:  
+Show zipkin_array_strings:  
 
     <?php
     $a = array('foo', 123);
     var_dump($a);
-    hello_array_strings($a);
+    zipkin_array_strings($a);
     var_dump($a);
 
 Working with $GLOBALS:  
 
     <?php
     $GLOBALS['test'] = 'Joe';
-    echo hello_get_global_var('test');
-    echo hello_get_global_var('none');
+    echo zipkin_get_global_var('test');
+    echo zipkin_get_global_var('none');
 
 Setting local variables:
 
     <?php
-    hello_set_local_var('test', 'Greetings');
+    zipkin_set_local_var('test', 'Greetings');
     echo "$test\n";
 
 
@@ -91,8 +91,8 @@ Resources
 
     <?php
 
-    $person = hello_person_new("Joseph", 31);
+    $person = zipkin_person_new("Joseph", 31);
     var_dump($person);
 
-    hello_person_greet($person);
+    zipkin_person_greet($person);
 
